@@ -1,38 +1,66 @@
-.App {
+.headerClass {
+  background-color: #f9d64b;
   text-align: center;
+  height: 230px;
+  border-bottom: 21px solid #f3db7a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.logo {
+  transform: scale(0.7);
+  margin-top: -10px;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: -10px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.CardChoice-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+  gap: 60px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.CardChoiceClass {
+  display: flex;
+  justify-content: center;
+  background-color: #2a4fd3;
+  box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  width: 400px;
+  height: 500px;
+}
+.Ouclass {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #e74045;
+  font-size: 48px;
+  font-weight: bold;
+  font-family: "Chivo Black", sans-serif;
+}
+.innerCardclass {
+  padding: 20px;
+  margin: 20px;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  width: 300px;
+  height: 420px;
+  box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.25);
+}
+.cardlogoclass {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 300px;
+  height: 300px;
+  border-radius: 5px;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cardplaceholderclass {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-family: "Chivo Black", sans-serif;
+  font-size: 20px;
 }

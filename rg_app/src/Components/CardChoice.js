@@ -9,15 +9,17 @@ class CardChoice extends Component {
     isBot ? (cardlogo = cardlogo1) : (cardlogo = cardlogo2);
     return (
       <div className={this.props.className}>
-        <div className="innerCardclass">
+        
+        <div className="innerCardclass" >
+          <a href = { isBot ? "/": "/loginguest"} >
           <img src={cardlogo} alt="logo" className="cardlogoclass" />
           {isBot ? (
-            <div className="cardplaceholderclass">Jouer contre un bot</div>
+            <div className="cardplaceholderclass" >Jouer contre un bot</div>
           ) : (
             <div className="cardplaceholderclass">
               Jouer contre avec des amis
             </div>
-          )}
+          )}</a>
           <div> </div>
         </div>
       </div>

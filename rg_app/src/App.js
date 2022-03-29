@@ -1,18 +1,23 @@
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
-import CardChoice from "./Components/CardChoice";
-import Ou from "./Components/Ou";
+import LoginGuest from "./routes/LoginGuest";
+import CardChoiceWrapper from "./Components/CardChoiceWrapper";
+import Room from "./Components/Room";
+import Join from "./Components/Join";
 
 
 function App() {
   return (
     <div className="App">
-        <Header name="Phillipe" className="headerClass"></Header>
-        <div className="CardChoice-wrapper">
-            <CardChoice isBot="true" className="CardChoiceClass"></CardChoice>
-            <Ou className="Ouclass"></Ou>
-            <CardChoice className="CardChoiceClass"></CardChoice>
-        </div>
+      <Header className="headerClass"/>
+      <Routes>
+        <Route exact path="/loginguest" element={<LoginGuest />} />
+        <Route exact path="/" element={<CardChoiceWrapper />} />
+        <Route  path="/Room" element={<Room />} />
+        <Route  path="/Join" element={<Join/>} />
+
+      </Routes>
     </div>
   );
 }

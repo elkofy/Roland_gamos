@@ -64,3 +64,41 @@
   font-family: "Chivo Black", sans-serif;
   font-size: 20px;
 }
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  border-radius: 5px;
+  border: 1px solid #e74045;
+}
+input{
+  width: 180px;
+  height: 30px;
+  
+  font-size: 20px;
+  font-family: "Chivo Black", sans-serif;
+  font-weight: bold;
+  margin: 10px;
+}
+.form_Btn {
+  width: 180px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #e74045;
+  font-size: 20px;
+  font-family: "Chivo Black", sans-serif;
+  font-weight: bold;
+  margin: 10px;
+  background-color: #e74045;
+  color: #f8f8f8;
+}

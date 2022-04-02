@@ -1,0 +1,1 @@
+module.exports = function (StartGame){ console.log("test"); };

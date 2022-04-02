@@ -17,7 +17,7 @@ class CardChoice extends Component {
             <div className="cardplaceholderclass" >Jouer contre un bot</div>
           ) : (
             <div className="cardplaceholderclass">
-              Jouer contre avec des amis
+              Jouer avec des amis
             </div>
           )}</a>
           <div> </div>

@@ -4,7 +4,7 @@ import Header from "./Components/Header";
 import LoginGuest from "./routes/LoginGuest";
 import CardChoiceWrapper from "./Components/CardChoiceWrapper";
 import Room from "./Components/Room";
-import Join from "./Components/Join";
+import Waiting from "./Components/Waiting";
 
 
 function App() {
@@ -15,8 +15,7 @@ function App() {
         <Route exact path="/loginguest" element={<LoginGuest />} />
         <Route exact path="/" element={<CardChoiceWrapper />} />
         <Route  path="/Room" element={<Room />} />
-        <Route  path="/Join" element={<Join/>} />
-
+        <Route  path="/Waiting" element={<Waiting/>} />
       </Routes>
     </div>
   );

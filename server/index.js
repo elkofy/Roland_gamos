@@ -13,9 +13,6 @@ const io = new socketIo.Server(server, {
   }
 });
 
-// app.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
 app.get("/", (req, res) => {
   res.send({ response: "I am alive" }).status(200);
 });
@@ -28,31 +25,27 @@ app.get("/xD", (req, res) => {
   StartGame();
 })
 
-let interval;
+var users = [];
 
-const getApiAndEmit = socket => {
-  const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
-};
 
-io.on("connection", (socket) => {
-  console.log("New client connected");
-  if (interval) {
-    clearInterval(interval);
-  }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-    clearInterval(interval);
+var bool = false;
+
+io.on('connection', function (socket) {
+  socket.on('create', function (room) {
+    socket.join(room);
+    console.log(`${socket.id} created ${room}`);
+    users.push({ id: socket.id, room: room });
   });
-});
-
-io.on('connection', function(socket) {
-  socket.on('create', function(room) {
+  socket.on('join', function (room) {
     socket.join(room);
     console.log(`${socket.id} joined ${room}`);
+    users.push({ id: socket.id, room: room });
+    socket.emit('message', users);
+
   });
+
+  //send the list of users to the client
+ 
 });
 
 // io.on('connection', (socket) => {

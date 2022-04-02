@@ -11,7 +11,7 @@ export default class LoginGuest extends Component {
   }
 
   redirectToRoom = () => {
-    window.location.href = "/Join/";
+    window.location.href = "/Waiting/";
     localStorage.setItem("User", this.state.User);
   }
   handleChange(event) {

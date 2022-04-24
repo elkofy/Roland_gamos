@@ -64,7 +64,9 @@
   font-family: "Chivo Black", sans-serif;
   font-size: 20px;
 }
-
+.bc_item_selected{
+ outline: solid 5px red;
+}
 .LoginForm {
   display: flex;
   flex-direction: column;
@@ -90,10 +92,12 @@ input{
   font-weight: bold;
   margin: 10px;
 }
+
 .form_Btn {
   width: 180px;
-  height: 30px;
+  height: 40px;
   border-radius: 5px;
+  padding: 4px;
   border: 1px solid #e74045;
   font-size: 20px;
   font-family: "Chivo Black", sans-serif;
@@ -101,4 +105,87 @@ input{
   margin: 10px;
   background-color: #e74045;
   color: #f8f8f8;
+}
+/* Code realtif au Lobby */
+.Lobby{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 32px;
+}
+/* Blue card classes */
+.Blue_card{
+  display: flex;
+  flex-direction: column;
+  background-color: #2a4fd3;
+  box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  width: 400px;
+  height: 500px;
+  color: white;
+  padding: 8px;
+}
+
+.Blue_card_title{
+  font-size: 32px;
+  font-weight: 900;
+  font-family: "Chivo Black", sans-serif;
+  padding-left: 15px;
+  margin: 0px 0px 8px 0px;
+}
+
+
+.Blue_card_content h5  {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "Chivo Black", sans-serif;
+  padding-left: 15px;
+  margin: 8px 0px 16px 0px;
+}
+.bc_section{
+  margin-bottom: 16px;
+}
+.bc_grid{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 32px;
+}
+.bc_item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-family: "Chivo Black", sans-serif;
+  font-weight: 900;
+  background-color: #fff;
+  box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 4px;
+  width: 75px;
+  height: 75px;
+  color: black;
+}
+/* User_lists */
+.User_lists{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 24px;
+  font-family: "Chivo Black", sans-serif;
+  font-weight: 900;
+  border-radius: 10px;
+  padding: 4px;
+  gap : 8px;
+}
+.User_Card{
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  color: black;
+  padding: 8px;
 }

@@ -5,14 +5,8 @@ export default function Lobby() {
     const [response, setResponse] = useState("");
     const [users, setUsers] = useState([]);
     const [divs, setDivs] = useState("");
-    useEffect(() => {
-        getListUsers();
-    });
 
     function getListUsers() {
-        socket.on("listUsers", data => {
-            console.log(data);
-        });
 
         socket.emit("getListUsers");
         socket.on("listUsers", data => {
@@ -21,7 +15,6 @@ export default function Lobby() {
 
         });
         console.log("getListUsers");
-
 
         return users.map(user => {
             return (
@@ -33,15 +26,25 @@ export default function Lobby() {
 
     }
 
+    useEffect(() => {
+        getListUsers();
+    },[]);
 
-    return (
+ let items = users.map(user => {
+     return <div className="User_Card" key={user.id}>{user.user}</div>
+    });
+
+    return ( 
         <div className="Lobby">
+            
             <div className="Blue_card">
                 <h3 className="Blue_card_title">Joueurs :</h3>
                 <div className="User_lists">
                     {/* <div className="User_Card">Nassim</div>
                     <div className="User_Card">Phillipe</div> */}
-                    {getListUsers()}
+                    {//getListUsers()
+                    }
+                    {items}
                 </div>
             </div>
             <div className="Blue_card">

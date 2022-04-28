@@ -45,8 +45,14 @@ io.on('connection', function (socket) {
     users.push({ user: user, socket: socket.id, room: room });
     // io.sockets.in(room).emit('joiner', users);
     io.sockets.in(room).emit('listUsers', users);
-
-
+    // io.sockets.in(room).emit('message', "joiner");
+    //send to all the sockets 
+    //broadcast to all the sockets except the sender
+    socket.broadcast.emit('listUsers', users);
+    // socket.to(room).emit('listUsers', users);
+    // socket.broadcast.to(room).emit('listUsers', users);
+    // io.to(room).emit('listUsers', users);
+    // io.sockets.in(room).emit('listUsers', users);
   });
 
   socket.on('message', function (data) {

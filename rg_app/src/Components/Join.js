@@ -12,9 +12,7 @@ export default function Join() {
                 () => {
                     socket.emit('join', [room , localStorage.User]);
                     socket.emit('message', "joiner");
-                    socket.on('message', data => {
-                        console.log(data);
-                    });
+                    localStorage.setItem('Room', room);
                     socket.on('joiner', data => {
                         console.log(data);
                     });

@@ -14,11 +14,10 @@ export default function Create() {
             <button href="/Lobby" onClick={
                 () => {
                     socket.emit('create', [room, localStorage.User]);
-                    socket.on('joiner', data => {
-                        console.log(data);
-                    });
-                    //go to lobby
-                    window.location.href = "/Lobby";
+                    localStorage.setItem('Room', room);
+                    localStorage.setItem('Leader', 'leader');
+                    //pass leader to lobby
+                    window.location.href = "/Lobby/?=Leader";
                 }
             } >Créer</button>
 

@@ -2,11 +2,9 @@ const express = require('express');
 const http = require('http');
 const socketIo = require("socket.io");
 const internal = require('stream');
+const { ConversationPage } = require('twilio/lib/rest/conversations/v1/conversation');
 const StartGame = require("./modules/controller");
-
-
 const app = express();
-
 const server = http.createServer(app);
 const io = new socketIo.Server(server, {
   cors: {
@@ -66,10 +64,14 @@ var users = {
 
     return roomsArray;
   }
-,
+  ,
   getUserRoom: function (id) {
     var user = this.getUser(id);
     return user.room;
+  }
+  , getUsers: function () {
+    return users.users.map((user) => user.name);
+    ;
   }
 
 };
@@ -78,54 +80,63 @@ var users = {
 io.on('connection', function (socket) {
 
   socket.on('create', function ([room, user]) {
+
     console.log(user);
     socket.join(room);
+    socket.to(room).emit('listUsers', users.getUsers());
     console.log(`${socket.id} created ${room}`);
+    console.log("Coming from create function", users.getUserList(room));
+
     //users.push({ user: user, socket: socket.id, room: room });
     users.addUser(socket.id, user, room);
     users.addRoom(room);
+    io.to("some room").emit("some event");
+
 
   });
 
   socket.on('join', function ([room, user]) {
-    socket.join(room);
-    console.log(user);
-    
-
     console.log(`${socket.id} joined ${room}`);
-    //users.push({ user: user, socket: socket.id, room: room });
+    socket.join(room);
     users.addUser(socket.id, user, room);
-    // io.sockets.in(room).emit('joiner', users);
-    //io.sockets.in(room).emit('listUsers', users.getUserList(room));
-    // io.sockets.in(room).emit('message', "joiner");
-    //send to all the sockets 
-    //broadcast to all the sockets except the sender
-    
-    socket.broadcast.emit('listUsers', users.getUserList(room));
-    // socket.to(room).emit('listUsers', users);
-    // socket.broadcast.to(room).emit('listUsers', users);
-    // io.to(room).emit('listUsers', users);
-    // io.sockets.in(room).emit('listUsers', users);
+    console.log("Coming from join function", users.getUserList(room));
+
+    // socket.to(room).emit('listUsers', users.getUsers());
+    io.to(room).emit('listUsers', users.getUserList(room));
+
+    // socket.broadcast.to(room).emit('listUsers', users.getUserList(room));
+    // io.sockets.in(room).emit('listUsers', users.getUserList(room));
+
+
   });
 
   socket.on('message', function (data) {
-    console.log(data);
-
+    console.log("LOOKS LIKE THERE IS A ", data);
   });
 
-  socket.on('getListUsers', function (data) {
+
+  socket.on('getListUsers', function (room) {
     //send users to socket
-    console.log(data);
-    
-    socket.emit('listUsers', users.getUserList(data));
+    console.log(room)
+
+    // socket.emit('listUsers', users.getUserList(room));
+    console.log("GETLISTUSERS", users.getUserList(room));
+    // console.log("Coming from getlistUser function", users.getUserList(room));
+    // socket.emit('listUsers', users.getUserList(data));
     //send users to all sockets in users room
-    // socket.broadcast.to(data.room).emit('listUsers', users);
+    // socket.to(data).emit('listUsers', users.getUserList(data));
+
+    // io.in(room).emit('listUsers',  users.getUserList(room));
+    // socket.broadcast.to(room).emit('listUsers', users.getUserList(room));
+    // io.sockets.in(room).emit('listUsers', users.getUserList(room));
+    // socket.in(room).emit('listUsers', users.getUserList(room));
+    io.to(room).emit('listUsers', users.getUserList(room));
 
   })
 
   setInterval(() => {
     let room = "test";
-    io.sockets.in(room).emit('users', users);
+    io.sockets.to(room).emit('message', users);
   }, 1000);
   //send the users to everyone in the room
   socket.on('users', function (room) {
@@ -134,9 +145,14 @@ io.on('connection', function (socket) {
   }
 
   );
-
+  // socket.emit('users', users);
   //send the list of users to the client
 
+});
+io.on('disconnect', function (socket) {
+  console.log(`${socket.id} disconnected`);
+  users.removeUser(socket.id);
+  // io.sockets.in(room).emit('listUsers', users.getUserList(room));
 });
 
 // io.on('connection', (socket) => {

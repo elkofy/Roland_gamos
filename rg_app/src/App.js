@@ -1,4 +1,5 @@
 import "./App.css";
+import {SocketContext, socket} from './context/socket';
 import { Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
 import LoginGuest from "./routes/LoginGuest";
@@ -11,6 +12,7 @@ import Lobby from "./Components/Lobby";
 
 function App() {
   return (
+    <SocketContext.Provider value={socket}>
     <div className="App">
       <Header className="headerClass" />
       <Routes>
@@ -23,6 +25,7 @@ function App() {
         <Route path='/Lobby' element={<Lobby />} />
       </Routes>
     </div>
+    </SocketContext.Provider>
   );
 }
 

@@ -10,13 +10,14 @@
     "bulma": "^0.9.3",
     "express": "^4.17.2",
     "firebase": "^9.6.8",
-    "react": "0.0.0-experimental-72a933d28-20220309",
-    "react-dom": "0.0.0-experimental-72a933d28-20220309",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "reactfire": "^4.2.1",
     "socket.io": "^4.4.1",
-    "web-vitals": "^2.1.3"
+    "web-vitals": "^2.1.3",
+    "websocket": "^1.0.34"
   },
   "scripts": {
     "start": "react-scripts start",

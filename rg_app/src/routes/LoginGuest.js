@@ -1,33 +1,35 @@
-import { Component } from "react";
+import React, { Component } from "react";
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 
-export default class LoginGuest extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      User: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
+export default function LoginGuest() {
 
-  redirectToRoom = () => {
-    window.location.href = "/Waiting/";
-    localStorage.setItem("User", this.state.User);
+  const [UserName, setUserName] = React.useState("");
+
+
+  let navigate = useNavigate();
+  let location = useLocation();
+  let params = useParams();
+
+  const handleChange = e => {
+    setUserName(e.target.value)
+    localStorage.setItem("User", e.target.value);
   }
-  handleChange(event) {
-    this.setState({ User: event.target.value });
-  }
-  render() {
 
 
     return (
       <div className="LoginForm">
         <div className="formulaire">
           <label>Entrez votre nom</label>
-          <input type="text" value={this.state.User} onChange={this.handleChange} />
-          <button className="form_Btn" onClick={this.redirectToRoom}  >🚀 GO 🚀</button>
+          <input type="text" value={UserName} onChange={handleChange} />
+
+          <button className="form_Btn" onClick={() => { navigate('/waiting') }} >🚀 GO 🚀</button>
         </div>
       </div>
     );
-  }
+  
 }

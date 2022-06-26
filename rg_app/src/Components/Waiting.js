@@ -1,8 +1,7 @@
 import React from "react";
 import create from "../res/create.png"
 import join from "../res/join.png"
-
-
+import { Link } from "react-router-dom";
 export default function Waiting() {
 
     return (
@@ -12,20 +11,20 @@ export default function Waiting() {
             </div>
             <div className="CardChoice-wrapper">
                 <div className="innerCardclass">
-                    <a href="/Create">
+                    <Link to="/Create">
                         <img alt="logo" src={create} className="cardlogoclass" />
                         <div className="cardplaceholderclass">
                             Créer un serveur
                         </div>
-                    </a>
+                    </Link>
                 </div>
                 <div className="innerCardclass">
-                    <a href="/Join">
+                    <Link to="/Join">
                         <img alt="logo" src={join} className="cardlogoclass" />
                         <div className="cardplaceholderclass">
                             Rejoindre un serveur
                         </div>
-                    </a>
+                    </Link>
                 </div>
 
 

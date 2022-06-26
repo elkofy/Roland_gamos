@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import cardlogo1 from "../res/cardlogo1.svg";
 import cardlogo2 from "../res/cardlogo2.svg";
+import { Link } from "react-router-dom";
 
 class CardChoice extends Component {
   render() {
@@ -11,7 +12,7 @@ class CardChoice extends Component {
       <div className={this.props.className}>
         
         <div className="innerCardclass" >
-          <a href = { isBot ? "/": "/loginguest"} >
+          <Link to="/loginguest" >
           <img src={cardlogo} alt="logo" className="cardlogoclass" />
           {isBot ? (
             <div className="cardplaceholderclass" >Jouer contre un bot</div>
@@ -19,7 +20,7 @@ class CardChoice extends Component {
             <div className="cardplaceholderclass">
               Jouer avec des amis
             </div>
-          )}</a>
+          )}</Link>
           <div> </div>
         </div>
       </div>

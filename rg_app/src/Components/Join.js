@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import socket from '../middleware/Socket';
+import React, { useState, useContext } from "react";
+import { SocketContext } from '../context/socket';
+import { useNavigate } from "react-router-dom";
 
 export default function Join() {
     const [room, setRoom] = useState("");
+    const socket = useContext(SocketContext);
+
+    let navigate = useNavigate();
+
     const JoinRoom = () => {
         socket.emit('join', [room, localStorage.User]);
-        socket.emit('message', "joiner");
+
         localStorage.setItem('Room', room);
-        window.location.href = "/Lobby";
+        navigate('/Lobby')
+
     }
-    
+
     return (
         <div>
             <h1>Bienvenue {localStorage.User}</h1>

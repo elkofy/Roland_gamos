@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React,{ Component } from "react";
 import CardChoice from "./CardChoice";
 import Ou from "./Ou";
 class CardChoiceWrapper extends Component {

@@ -17,12 +17,20 @@ export default function Lobby() {
             setUsers(data);
             console.log('client room');
         });
+        socket.on('startGame', (room) => {
+            console.log('client startGame');
+            navigate("/Game");
+        });
 
     }
 
     const StartGame = () => {
         console.log("StartGame");
-        navigate('/Game')
+        socket.emit('startGame', localStorage.getItem("Room"));
+        socket.on('startGame', (room) => {
+            console.log('client startGame');
+            navigate("/Game");
+        }   );
     }
 
     useEffect(() => {

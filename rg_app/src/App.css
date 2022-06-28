@@ -189,3 +189,45 @@ input{
   color: black;
   padding: 8px;
 }
+/* game-view */
+.game-view{
+  margin-top: 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center ;
+  align-items:flex-start;
+  padding:  0px 64px;
+
+} 
+/* game-board */
+.game-board{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  gap : 32px;
+}
+.game-board__head{
+  display: flex;
+  flex-direction: row;
+  justify-content:end;
+  align-items: center;
+}
+.game-board__body{
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+/*Turnn*/
+.turn--enabled{
+  display: block;
+}
+.turn--disabled{
+  display: none;
+}

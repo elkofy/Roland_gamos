@@ -11,6 +11,7 @@ import Waiting from "./Components/Waiting";
 import Create from "./Components/Create";
 import Join from "./Components/Join";
 import Lobby from "./Components/Lobby";
+import Game from "./Components/Game";
 
 function App() {
 
@@ -27,6 +28,8 @@ function App() {
             <Route  path='/Create' exact element={<Create />} />
             <Route  path='/Join' exact element={<Join />} />
             <Route  path='/Lobby' exact element={<Lobby />} />
+            <Route  path='/Game' exact element={<Game />} />
+
           </Routes>
         </SocketContext.Provider>
       </BrowserRouter>

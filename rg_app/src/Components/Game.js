@@ -5,39 +5,112 @@ import medal from '../res/medal.svg';
 import chrono from '../res/chrono.svg';
 import BigDisplay from "./displays/BigDisplay";
 import { SocketContext } from '../context/socket';
+import BigDisplayInput from "./displays/BigDisplayInput";
 
 export default function Game() {
     const socket = useContext(SocketContext);
-    const [gameState, setGameState] = useState({
-        game: {
-            turn: 0,
-        }
-    });
+    const [currentArtist, setCurrentArtist] = useState("");
     const [players, setPlayers] = useState({
         players: [],
     });
+    const [gameState, setGameState] = useState({
+        turn: 1,
+        artists: [],
+        currentPlayer: "",
+        ended: false
+    });
     const [answer, setAnswer] = useState('')
+    const [selected, setSelected] = useState(true)
+
     const startGame = () => {
-        socket.emit('startGame', localStorage.Room);
+        getRandomArtist();
         socket.emit('players', localStorage.Room);
         socket.on('players', (data) => {
-            console.log(data);
+            // console.log('players', data);
             setPlayers(data);
-        }
-        );
-        socket.on('checking', (data) => {
-            console.log(data);
-            // setGameState(data);
         });
+
+        socket.on('currentplayer', (data) => {
+            // console.log('currentplayer', data);
+            setSelected(data)
+        });
+        socket.on('updateGS', (data) => {
+            console.log('socket listen gameState', data);
+            // setCurrentArtist(data.artists[data.artists.length - 1]);
+            setGameState(data);
+        });
+
+
+    }
+
+    const getRandomArtist = () => {
+        if (localStorage.Leader === "leader") {
+            console.log("leader");
+            socket.emit('getRandArtist', localStorage.Room);
+        }
+        socket.on('getRandArtist', (data) => {
+            console.log('getRandArtist', data);
+            setCurrentArtist(data)
+
+
+        
+
+            // let newGameState = { ...gameState, artists: [...gameState.artists, data] };
+            // // console.log('newGameState', newGameState);
+            // setGameState(newGameState);
+            // // console.log('leader gameState', gameState);
+            // socket.emit("updateGS", [gameState, localStorage.Room]);
+        });
+
     }
     const sendAnswer = () => {
-        let prevanswer = 'dinos'
-        socket.emit('answer', [answer, localStorage.User, localStorage.Room, prevanswer]);
+        console.log('answer', answer);
+        socket.emit('answer', [answer, localStorage.User, localStorage.Room, currentArtist]);
+        // console.log('answer', answer);
+        // setGameState(
+        //     {
+        //         ...gameState,
+        //         turn: gameState.turn + 1,
+        //         currentPlayer: localStorage.User
+        //     }
+        // )
+        socket.on('checking', (data) => {
+            console.log('checking', data);
+            if (data !== 'no featuring') {
+                console.log('answer', answer);
+                // setGameState(
+                //     {
+                //         ...gameState,
+                //         turn: gameState.turn + 1,
+                //         currentPlayer: localStorage.User,
+                //         artists: [...gameState.artists, currentArtist, answer]
+                //     }
+                // )
+                setCurrentArtist(answer);
+
+                
+            }
+            else {
+                // setGameState(
+                //     {
+                //         ...gameState,
+                //         turn: gameState.turn + 1,
+                //         currentPlayer: localStorage.User,
+                //         artists: [...gameState.artists, currentArtist],
+                //         ended: true
+                //     })
+
+            }
+            console.log('gameState', gameState);
+            // socket.emit("updateGS", [gameState, localStorage.Room]);
+
+        });
+
+       
     }
     const handleChange = (e) => {
-        console.log(e.target.value);
         setAnswer(e.target.value);
-        console.log(answer);
+        console.log('answer', e.target.value);
     }
 
     useEffect(() => {
@@ -47,7 +120,7 @@ export default function Game() {
 
     return (
         <div className="game-view" >
-            <Bluecard text={players[0]}></Bluecard>
+            <Bluecard selected={selected} text={players[0]}></Bluecard>
             <div className="game-board" id="Wrapper">
                 <div className="game-board__head">
                     <SmallDisplay smclass='sm-display-primary' text='ARTISTES :' textclass='sm-display__text--red' ></SmallDisplay>
@@ -56,21 +129,14 @@ export default function Game() {
                     <SmallDisplay smclass='sm-display-primary' text='50 secondes' textclass='sm-display__text--black' ></SmallDisplay>
                 </div>
                 <div className="game-board__body">
-                    <BigDisplay bigclass='big-display-primary' text="DINOS" textclass='big-display__text--black'></BigDisplay>
-                    <SmallDisplay smclass='sm-display-primary' text="FEAT" textclass='sm-display__text--black--bold'></SmallDisplay>
-                    <BigDisplay bigclass='big-display-primary' text="DOSSEH" textclass='big-display__text--black'></BigDisplay>
-                    <div>
-                        <p className="turn--enabled">A votre tour</p>
-                        <p className="turn--enabled">V</p>
-                        <p className="turn--disabled">X</p>
-
-                        <input value={answer} onChange={handleChange} ></input>
-                        <button onClick={sendAnswer}>Send</button>
-                    </div>
+                    <BigDisplay bigclass='big-display-primary' text={currentArtist} textclass='big-display__text--black' />
+                    <SmallDisplay smclass='sm-display-primary' text="FEAT" textclass='sm-display__text--black--bold' />
+                    <BigDisplayInput bigclass='big-display-primary' text="DOSSEH" textclass='big-display__text--black' inputvalue={answer}  inputonChange={handleChange} />
+                    <button onClick={sendAnswer}>Send</button>
                 </div>
 
             </div>
-            <Bluecard text={players[1]}></Bluecard>
+            <Bluecard selected={!selected} text={players[1]}></Bluecard>
 
         </div>
     )

@@ -1,36 +1,31 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { SocketContext } from '../context/socket';
 import { useNavigate } from "react-router-dom";
 
 import Selector from "./Selector";
 export default function Lobby() {
-    // const [response, setResponse] = useState("");
-    const [users, setUsers] = useState([]);
-    const [isLeader, setIsLeader] = useState(false);
     const socket = useContext(SocketContext);
     let navigate = useNavigate();
-    // const [divs, setDivs] = useState("");
+    const [users, setUsers] = useState([]);
+    const [isLeader, setIsLeader] = useState(false);
+ 
 
     function getListUsers() {
         setIsLeader(window.location.href.includes("Leader"))
         socket.on('room', (data) => {
             setUsers(data);
-            console.log('client room');
         });
         socket.on('startGame', (room) => {
-            console.log('client startGame');
-            navigate("/Game");
+            if (window.location.href !== `http://localhost:3000/Game`) {
+                navigate('/Game');
+            }
         });
+
 
     }
 
     const StartGame = () => {
-        console.log("StartGame");
         socket.emit('startGame', localStorage.getItem("Room"));
-        socket.on('startGame', (room) => {
-            console.log('client startGame');
-            navigate("/Game");
-        }   );
     }
 
     useEffect(() => {
@@ -69,7 +64,7 @@ export default function Lobby() {
             </div>
             { }
             <div>
-                {isLeader ? <button className="form_Btn" onClick={StartGame} >🚀 GO ! 🚀</button> : ""}
+                {isLeader ? <button className="form_Btn" onClick={StartGame} ><span role='img' aria-label="rocket">🚀</span>  GO ! <span role='img' aria-label="rocket">🚀</span> </button> : ""}
 
             </div>
         </div>

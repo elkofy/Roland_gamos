@@ -1,11 +1,11 @@
 const app = require("express")();
 const httpServer = require("http").createServer(app);
 
-const options = { 
-  cors : {
+const options = {
+  cors: {
     origin: "*",
   }
- };
+};
 
 const io = require("socket.io")(httpServer, options);
 
@@ -23,20 +23,24 @@ var game = {
 }
 
 const checkingfeaturing = async (answer) => {
- return await fetch(`https://api.musixmatch.com/ws/1.1/track.search?q_artist=${answer}&page_size=3&apikey=ab3294bd66018acf67906c2281419b12`)
- .then(res => res.json())
-  .then(data => {
-     if (data.message.body.track_list.length==0){
-      console.log('no featuring')
-      return false;
-     }
-      else{
-        console.log('featuring')
-        return true;
-      }
+  var artists = answer.split(' ');
+  if (artists[0] === artists[1]) {
+    return 'no featuring';
   }
-  )
-  .catch(err => console.log(err));
+  return await fetch(`https://api.musixmatch.com/ws/1.1/track.search?q_artist=${answer}&page_size=3&apikey=ab3294bd66018acf67906c2281419b12`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.message.body.track_list.length == 0) {
+        return 'no featuring';
+      }
+      else {
+        var featuring = data.message.body.track_list[0].track.track_name;
+        console.log(featuring)
+        return featuring;
+      }
+    }
+    )
+    .catch(err => console.log(err));
 
 }
 
@@ -89,19 +93,15 @@ var users = {
     return users.users.map((user) => user.name);
     ;
   }
-
 };
 
-let asynchronizer = () => {
 
-}
-
-io.on("connection", socket => { 
-console.log("a user connected",socket.id);
-socket.on("disconnect", () => {
-  console.log("user disconnected");
-}
-);
+io.on("connection", socket => {
+  console.log("a user connected", socket.id);
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  }
+  );
   socket.on("create", (data) => {
     console.log("create", data[0]);
     socket.join(data[0]);
@@ -124,26 +124,36 @@ socket.on("disconnect", () => {
     io.to(room).emit("startGame", room);
   }
   );
-  socket.on("players" , (room) => {
+  socket.on("players", (room) => {
     socket.join(room);
     io.to(room).emit("players", users.getUserList(room));
     game.players = users.getUserList(room);
+    socket.emit("currentplayer", true);
   });
 
   socket.on("answer", async (data) => {
-    console.log("answer", data[0]);
     game.gameState.currentPlayer = data[1];
-    game.gameState.turn+=1;
+    game.gameState.turn += 1;
     let room = data[2];
     io.to(room).emit("players", users.getUserList(room));
     var checking = await checkingfeaturing(`${data[0]} ${data[3]}`);
-    socket.emit( "checking",  checking );
-
-    
+    socket.emit("checking", checking);
+    socket.emit("currentplayer", false);
   });
-
+  socket.on("getRandArtist", (room) => {
+    console.log("getRandArtist", room);
+    let artists = ['dinos', 'damso', 'nekfeu', 'disiz', 'hamza', 'sch', 'la feve', 'zamdane', 'jul', 'alonzo'];
+    const randomIndex = Math.floor(Math.random() * artists.length);
+    console.log(artists[randomIndex]);
+    io.to(room).emit("getRandArtist", artists[randomIndex]);
+  });
+  socket.on("updateGS", (data) => {
+    console.log("updateGS", data[0]);
+    game.gameState = data[0];
+    io.to(data[1]).emit("updateGS", data[0]);
+  }
+  );
 
 });
 
 httpServer.listen(4000);
-// WARNING !!! app.listen(3

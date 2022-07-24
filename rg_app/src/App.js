@@ -6,7 +6,6 @@ import React from "react";
 import Header from "./Components/Header";
 import LoginGuest from "./routes/LoginGuest";
 import CardChoiceWrapper from "./Components/CardChoiceWrapper";
-import Room from "./Components/Room";
 import Waiting from "./Components/Waiting";
 import Create from "./Components/Create";
 import Join from "./Components/Join";
@@ -23,7 +22,6 @@ function App() {
           <Routes>
           <Route  path='/'  exact element={<CardChoiceWrapper />} />
             <Route  path="/loginguest"  exact element={<LoginGuest />} />
-            <Route  path="/Room" exact element={<Room />} />
             <Route  path="/Waiting" exact element={<Waiting />} />
             <Route  path='/Create' exact element={<Create />} />
             <Route  path='/Join' exact element={<Join />} />

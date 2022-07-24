@@ -212,7 +212,7 @@ input{
 .game-board__head{
   display: flex;
   flex-direction: row;
-  justify-content:end;
+  justify-content:flex-end;
   align-items: center;
 }
 .game-board__body{

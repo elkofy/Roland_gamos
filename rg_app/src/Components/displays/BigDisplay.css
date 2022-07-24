@@ -16,3 +16,15 @@
   font-family: "Chivo Black", sans-serif;
 }
 
+.big-display-primary input {
+  border: 0;
+  background: transparent;
+  font-size: 32px;
+  font-weight: 1000;
+  font-style: oblique;
+  color: #000;
+  font-family: "Chivo Black", sans-serif;
+}
+.big-display-primary input:focus-visible {
+  outline: 0;
+}

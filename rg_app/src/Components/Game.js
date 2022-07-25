@@ -8,6 +8,7 @@ import { SocketContext } from '../context/socket';
 import BigDisplayInput from "./displays/BigDisplayInput";
 
 export default function Game() {
+
     const socket = useContext(SocketContext);
     const [currentArtist, setCurrentArtist] = useState("");
     const [players, setPlayers] = useState({
@@ -22,9 +23,12 @@ export default function Game() {
     const [answer, setAnswer] = useState('')
     const [selected, setSelected] = useState(true)
 
+
     const startGame = () => {
+        console.log("startGame");
         getRandomArtist();
         socket.emit('players', localStorage.Room);
+
         socket.on('players', (data) => {
             // console.log('players', data);
             setPlayers(data);
@@ -34,87 +38,75 @@ export default function Game() {
             // console.log('currentplayer', data);
             setSelected(data)
         });
+
         socket.on('updateGS', (data) => {
             console.log('socket listen gameState', data);
-            // setCurrentArtist(data.artists[data.artists.length - 1]);
             setGameState(data);
         });
-
-
+        socket.on('getRandArtist', (data) => {
+            setCurrentArtist(data)
+        });
     }
 
     const getRandomArtist = () => {
+        console.log('getRandArtist');
         if (localStorage.Leader === "leader") {
-            console.log("leader");
             socket.emit('getRandArtist', localStorage.Room);
         }
-        socket.on('getRandArtist', (data) => {
-            console.log('getRandArtist', data);
-            setCurrentArtist(data)
 
-
-        
-
-            // let newGameState = { ...gameState, artists: [...gameState.artists, data] };
-            // // console.log('newGameState', newGameState);
-            // setGameState(newGameState);
-            // // console.log('leader gameState', gameState);
-            // socket.emit("updateGS", [gameState, localStorage.Room]);
-        });
 
     }
     const sendAnswer = () => {
-        console.log('answer', answer);
+        let num = Math.floor(Math.random() * 10);
         socket.emit('answer', [answer, localStorage.User, localStorage.Room, currentArtist]);
-        // console.log('answer', answer);
-        // setGameState(
-        //     {
-        //         ...gameState,
-        //         turn: gameState.turn + 1,
-        //         currentPlayer: localStorage.User
-        //     }
-        // )
+        socket.off('checking');
         socket.on('checking', (data) => {
             console.log('checking', data);
             if (data !== 'no featuring') {
                 console.log('answer', answer);
-                // setGameState(
-                //     {
-                //         ...gameState,
-                //         turn: gameState.turn + 1,
-                //         currentPlayer: localStorage.User,
-                //         artists: [...gameState.artists, currentArtist, answer]
-                //     }
-                // )
                 setCurrentArtist(answer);
+                setGameState(
+                    {
+                        ...gameState,
+                        turn: gameState.turn + 1,
+                        currentPlayer: localStorage.User,
+                        artists: [...gameState.artists, answer]
+                    }
+                )
 
-                
             }
             else {
-                // setGameState(
-                //     {
-                //         ...gameState,
-                //         turn: gameState.turn + 1,
-                //         currentPlayer: localStorage.User,
-                //         artists: [...gameState.artists, currentArtist],
-                //         ended: true
-                //     })
+                console.log('no featuring ;(', answer);
 
-            }
-            console.log('gameState', gameState);
-            // socket.emit("updateGS", [gameState, localStorage.Room]);
+                setGameState(
+                    {
+                        ...gameState,
+                        turn: gameState.turn + 1,
+                        currentPlayer: localStorage.User,
+                        artists: [...gameState.artists, currentArtist],
+                        ended: true
+                    })
+
+            } socket.off('checking');
+
+
 
         });
-
-       
+        console.log('gameState', gameState);
+        socket.emit("updateGS", [gameState, localStorage.Room]);
+        console.log(`this the function ${num}`, gameState.artists);
     }
     const handleChange = (e) => {
         setAnswer(e.target.value);
-        console.log('answer', e.target.value);
+
+
+
     }
 
     useEffect(() => {
-        startGame();
+        socket.removeAllListeners();
+        startGame()
+
     }
         , []);
 
@@ -131,7 +123,7 @@ export default function Game() {
                 <div className="game-board__body">
                     <BigDisplay bigclass='big-display-primary' text={currentArtist} textclass='big-display__text--black' />
                     <SmallDisplay smclass='sm-display-primary' text="FEAT" textclass='sm-display__text--black--bold' />
-                    <BigDisplayInput bigclass='big-display-primary' text="DOSSEH" textclass='big-display__text--black' inputvalue={answer}  inputonChange={handleChange} />
+                    <BigDisplayInput bigclass='big-display-primary' text="DOSSEH" textclass='big-display__text--black' inputvalue={answer} inputonChange={handleChange} />
                     <button onClick={sendAnswer}>Send</button>
                 </div>
 

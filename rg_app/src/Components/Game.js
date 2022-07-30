@@ -10,24 +10,23 @@ import BigDisplayInput from "./displays/BigDisplayInput";
 export default function Game() {
 
     const socket = useContext(SocketContext);
-    const [currentArtist, setCurrentArtist] = useState("");
     const [players, setPlayers] = useState({
         players: [],
     });
-    const [gameState, setGameState] = useState({
-        turn: 1,
-        artists: [],
-        currentPlayer: "",
-        ended: false
-    });
+    const [gameState, setGameState] = useState({});
+
+    const [currentArtist, setCurrentArtist] = useState("");
     const [answer, setAnswer] = useState('')
-    const [selected, setSelected] = useState(true)
+    const [turns, setTurns] = useState(1);
+    const [isTurn, setIsTurn] = useState(false);
+    const [isEnded, setIsEnded] = useState(false);
+    const [selected, setSelected] = useState(true);
 
 
-    const startGame = () => {
+
+
+    const startGame = async () => {
         console.log("startGame");
-        getRandomArtist();
-        socket.emit('players', localStorage.Room);
 
         socket.on('players', (data) => {
             // console.log('players', data);
@@ -39,96 +38,81 @@ export default function Game() {
             setSelected(data)
         });
 
+        socket.on('answer', (data) => {
+            // console.log('answer', data);
+            setAnswer(data)
+        })
         socket.on('updateGS', (data) => {
             console.log('socket listen gameState', data);
             setGameState(data);
+            setCurrentArtist(data.currentArtist)
         });
-        socket.on('getRandArtist', (data) => {
-            setCurrentArtist(data)
+        socket.on('end', (data) => {
+            console.log('end', data);
+            setIsEnded(data);
         });
-    }
 
-    const getRandomArtist = () => {
-        console.log('getRandArtist');
         if (localStorage.Leader === "leader") {
-            socket.emit('getRandArtist', localStorage.Room);
+            getRandomArtist();
+
+            socket.emit('players', localStorage.Room);
         }
 
 
-    }
-    const sendAnswer = () => {
-        let num = Math.floor(Math.random() * 10);
-        socket.emit('answer', [answer, localStorage.User, localStorage.Room, currentArtist]);
-        socket.off('checking');
-        socket.on('checking', (data) => {
-            console.log('checking', data);
-            if (data !== 'no featuring') {
-                console.log('answer', answer);
-                setCurrentArtist(answer);
-                setGameState(
-                    {
-                        ...gameState,
-                        turn: gameState.turn + 1,
-                        currentPlayer: localStorage.User,
-                        artists: [...gameState.artists, answer]
-                    }
-                )
-
-            }
-            else {
-                console.log('no featuring ;(', answer);
-
-                setGameState(
-                    {
-                        ...gameState,
-                        turn: gameState.turn + 1,
-                        currentPlayer: localStorage.User,
-                        artists: [...gameState.artists, currentArtist],
-                        ended: true
-                    })
-
-            } socket.off('checking');
-
-
+        socket.on('getRandArtist', (data) => {
+            console.log('getRandArtist', data);
+            setCurrentArtist(data)
 
         });
-        console.log('gameState', gameState);
-        socket.emit("updateGS", [gameState, localStorage.Room]);
-        console.log(`this the function ${num}`, gameState.artists);
+
+
     }
+
+
+
+    const getRandomArtist = () => {
+        // console.log('getRandArtist');
+        socket.emit('getRandArtist', localStorage.Room);
+
+    }
+    /*
+     *This function is called when the user clicks on the button.
+     *It will send the message to the server and then clear the input. 
+     */
+    const submitAnswer = () => {
+        socket.emit('answer', [answer, localStorage.User, localStorage.Room, currentArtist]);
+        setAnswer('');
+    }
+
     const handleChange = (e) => {
         setAnswer(e.target.value);
-
-
-
     }
 
     useEffect(() => {
+        //remove all previous socket connections
         socket.removeAllListeners();
         startGame()
-
     }
         , []);
 
     return (
         <div className="game-view" >
-            <Bluecard selected={selected} text={players[0]}></Bluecard>
+            <Bluecard selected={selected} text={players[0]} />
             <div className="game-board" id="Wrapper">
                 <div className="game-board__head">
-                    <SmallDisplay smclass='sm-display-primary' text='ARTISTES :' textclass='sm-display__text--red' ></SmallDisplay>
-                    <img src={medal} alt="artistes" className="sm-display__img"></img>
-                    <img src={chrono} alt="artistes" className="sm-display__img"></img>
-                    <SmallDisplay smclass='sm-display-primary' text='50 secondes' textclass='sm-display__text--black' ></SmallDisplay>
+                    <SmallDisplay smclass='sm-display-primary' text='ARTISTES :' textclass='sm-display__text--red' />
+                    <img src={medal} alt="artistes" className="sm-display__img" />
+                    <img src={chrono} alt="artistes" className="sm-display__img" />
+                    <SmallDisplay smclass='sm-display-primary' text='50 secondes' textclass='sm-display__text--black' />
                 </div>
                 <div className="game-board__body">
                     <BigDisplay bigclass='big-display-primary' text={currentArtist} textclass='big-display__text--black' />
                     <SmallDisplay smclass='sm-display-primary' text="FEAT" textclass='sm-display__text--black--bold' />
                     <BigDisplayInput bigclass='big-display-primary' text="DOSSEH" textclass='big-display__text--black' inputvalue={answer} inputonChange={handleChange} />
-                    <button onClick={sendAnswer}>Send</button>
+                    <button onClick={submitAnswer}>Send</button>
                 </div>
-
             </div>
-            <Bluecard selected={!selected} text={players[1]}></Bluecard>
+            <Bluecard selected={!selected} text={players[1]} />
 
         </div>
     )

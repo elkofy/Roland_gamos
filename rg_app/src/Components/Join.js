@@ -3,7 +3,7 @@ import { SocketContext } from '../context/socket';
 import { useNavigate } from "react-router-dom";
 
 export default function Join() {
-    const [room, setRoom] = useState("");
+    const [room, setRoom] = useState("foo");
     const socket = useContext(SocketContext);
 
     let navigate = useNavigate();

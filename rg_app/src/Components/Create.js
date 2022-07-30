@@ -4,7 +4,7 @@ import { SocketContext } from '../context/socket';
 import { useNavigate } from "react-router-dom";
 
 export default function Create() {
-    const [room, setRoom] = useState("");
+    const [room, setRoom] = useState("foo");
     const socket = useContext(SocketContext);
     let navigate = useNavigate();
 

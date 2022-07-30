@@ -9,7 +9,7 @@ export default function BigDisplayInput(props) {
     return (
         <div className={props.bigclass}>
             <div className={props.textclass}>
-                <input onChange={props.inputonChange} value={props.inputvalue}>
+                <input className={props.textclass} onChange={props.inputonChange} value={props.inputvalue}>
                 </input>
             </div>
         </div>

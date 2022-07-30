@@ -15,10 +15,13 @@ app.get("/", (req, res) => {
 );
 var game = {
   players: [],
-  turn: 0,
   gameState: {
-    currentPlayer: 0,
     turn: 0,
+    currentPlayer: '',
+    currentArtist: '',
+    artists: [],
+    ended: false,
+    winner: '',
   }
 }
 
@@ -126,27 +129,51 @@ io.on("connection", socket => {
   );
   socket.on("players", (room) => {
     socket.join(room);
+
     io.to(room).emit("players", users.getUserList(room));
     game.players = users.getUserList(room);
     socket.emit("currentplayer", true);
   });
 
   socket.on("answer", async (data) => {
+    let room = data[2];
+    let currplayer = data[1];
+
     game.gameState.currentPlayer = data[1];
     game.gameState.turn += 1;
-    let room = data[2];
     io.to(room).emit("players", users.getUserList(room));
     var checking = await checkingfeaturing(`${data[0]} ${data[3]}`);
-    socket.emit("checking", checking);
-    socket.emit("currentplayer", false);
+    if (checking === 'no featuring') {
+      game.gameState.ended = true;
+      game.gameState.winner = data[1];
+      socket.emit("end", game.gameState.ended);
+    }
+    else {
+      game.gameState.currentArtist = data[0];
+      game.gameState.artists.push(data[0]);
+      let idxplayer = game.players.indexOf(currplayer);
+      idxplayer == game.players.length - 1 ? idxplayer = 0 : idxplayer += 1;
+      game.gameState.currentPlayer = game.players[idxplayer];
+      io.to(room).emit("currentArtist", game.gameState.currentArtist);
+    }
+    console.log(game.gameState);
+    io.to(room).emit("updateGS", game.gameState);
+    // socket.emit("checking", checking);
+    // socket.emit("currentplayer", false);
   });
   socket.on("getRandArtist", (room) => {
     console.log("getRandArtist", room);
-    let artists = ['dinos', 'damso', 'nekfeu', 'disiz', 'hamza', 'sch', 'la feve', 'zamdane', 'jul', 'alonzo'];
+    let artists = ['dinos', 'orelsan', 'alpha wann', 'kaaris', 'freeze corleone', 'laylow', 'damso', 'nekfeu', 'disiz', 'hamza', 'sch', 'la feve', 'zamdane', 'jul', 'alonzo'];
     const randomIndex = Math.floor(Math.random() * artists.length);
     console.log(artists[randomIndex]);
+    game.gameState.currentArtist = artists[randomIndex];
+    game.gameState.artists.push(artists[randomIndex]);
+    io.to(room).emit("currentArtist", artists[randomIndex]);
+    console.log(game.gameState);
     io.to(room).emit("getRandArtist", artists[randomIndex]);
   });
+
+
   socket.on("updateGS", (data) => {
     console.log("updateGS", data[0]);
     game.gameState = data[0];

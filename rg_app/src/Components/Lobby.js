@@ -8,7 +8,7 @@ export default function Lobby() {
     let navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [isLeader, setIsLeader] = useState(false);
- 
+
 
     function getListUsers() {
         setIsLeader(window.location.href.includes("Leader"))
@@ -45,7 +45,8 @@ export default function Lobby() {
                     {items}
                 </div>
             </div>
-            <div className="Blue_card">
+
+            {isLeader ? <div className="Blue_card">
                 <h3 className="Blue_card_title">Paramètres :</h3>
                 <div className="Blue_card_content">
                     <div className="bc_section">
@@ -61,8 +62,13 @@ export default function Lobby() {
                         <Selector className='vie_item' />
                     </div>
                 </div>
-            </div>
-            { }
+            </div> : <div className="load-bar">
+                <div className="bar"></div>
+                <div className="bar"></div>
+                <div className="bar"></div>
+                <div className='loadertxt'> En attente de l'hote</div>
+            </div> }
+
             <div>
                 {isLeader ? <button className="form_Btn" onClick={StartGame} ><span role='img' aria-label="rocket">🚀</span>  GO ! <span role='img' aria-label="rocket">🚀</span> </button> : ""}
 

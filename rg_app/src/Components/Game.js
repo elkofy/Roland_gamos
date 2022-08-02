@@ -6,6 +6,7 @@ import chrono from '../res/chrono.svg';
 import BigDisplay from "./displays/BigDisplay";
 import { SocketContext } from '../context/socket';
 import BigDisplayInput from "./displays/BigDisplayInput";
+import SmallDisplaytimer from "./displays/SmallDisplayTimer.js";
 
 export default function Game() {
 
@@ -14,13 +15,11 @@ export default function Game() {
         players: [],
     });
     const [gameState, setGameState] = useState({});
-
     const [currentArtist, setCurrentArtist] = useState("");
     const [answer, setAnswer] = useState('')
-    const [turns, setTurns] = useState(1);
-    const [isTurn, setIsTurn] = useState(false);
     const [isEnded, setIsEnded] = useState(false);
-    const [selected, setSelected] = useState(true);
+    const [currentPlayer, setCurrentPlayer] = useState('');
+    const [artists, setArtists] = useState([]);
 
 
 
@@ -34,8 +33,8 @@ export default function Game() {
         });
 
         socket.on('currentplayer', (data) => {
-            // console.log('currentplayer', data);
-            setSelected(data)
+            console.log('currentplayer', data);
+            setCurrentPlayer(data)
         });
 
         socket.on('answer', (data) => {
@@ -44,8 +43,16 @@ export default function Game() {
         })
         socket.on('updateGS', (data) => {
             console.log('socket listen gameState', data);
+            if (data.ended === true) {
+                setIsEnded(true)
+                alert(`${data.winner} won the game`)
+            }
             setGameState(data);
             setCurrentArtist(data.currentArtist)
+            setArtists(data.artists)
+            setCurrentPlayer(data.currentPlayer)
+
+            console.log(data.artists);
         });
         socket.on('end', (data) => {
             console.log('end', data);
@@ -56,18 +63,25 @@ export default function Game() {
             getRandomArtist();
 
             socket.emit('players', localStorage.Room);
+            socket.emit('gameParams', [localStorage.Room, {
+                manche: localStorage.manche,
+                duree: localStorage.duree,
+                vie: localStorage.vie
+            }]);
+
         }
 
 
         socket.on('getRandArtist', (data) => {
             console.log('getRandArtist', data);
             setCurrentArtist(data)
+            setArtists([data])
+            console.log(data);
 
         });
 
 
     }
-
 
 
     const getRandomArtist = () => {
@@ -97,22 +111,23 @@ export default function Game() {
 
     return (
         <div className="game-view" >
-            <Bluecard selected={selected} text={players[0]} />
+            {console.log(gameState)}
+            <Bluecard selected={currentPlayer === players[0]} text={players[0]} />
             <div className="game-board" id="Wrapper">
                 <div className="game-board__head">
-                    <SmallDisplay smclass='sm-display-primary' text='ARTISTES :' textclass='sm-display__text--red' />
+                    <SmallDisplay smclass='sm-display-primary' text={`ARTISTES: ${artists.length}`} textclass='sm-display__text--red' />
                     <img src={medal} alt="artistes" className="sm-display__img" />
                     <img src={chrono} alt="artistes" className="sm-display__img" />
-                    <SmallDisplay smclass='sm-display-primary' text='50 secondes' textclass='sm-display__text--black' />
+                    <SmallDisplaytimer smclass='sm-display-primary' text='50 secondes' time={30} textclass='sm-display__text--black' />
                 </div>
                 <div className="game-board__body">
                     <BigDisplay bigclass='big-display-primary' text={currentArtist} textclass='big-display__text--black' />
                     <SmallDisplay smclass='sm-display-primary' text="FEAT" textclass='sm-display__text--black--bold' />
                     <BigDisplayInput bigclass='big-display-primary' text="DOSSEH" textclass='big-display__text--black' inputvalue={answer} inputonChange={handleChange} />
-                    <button onClick={submitAnswer}>Send</button>
+                    <button disabled={currentPlayer !== localStorage.User} onClick={submitAnswer}>Send</button>
                 </div>
             </div>
-            <Bluecard selected={!selected} text={players[1]} />
+            <Bluecard selected={currentPlayer === players[1]} text={players[1]} />
 
         </div>
     )

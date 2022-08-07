@@ -64,8 +64,8 @@
   font-family: "Chivo Black", sans-serif;
   font-size: 20px;
 }
-.bc_item_selected{
- outline: solid 5px red;
+.bc_item_selected {
+  outline: solid 5px red;
 }
 .LoginForm {
   display: flex;
@@ -83,10 +83,10 @@
   border-radius: 5px;
   border: 1px solid #e74045;
 }
-input{
+input {
   width: 180px;
   height: 30px;
-  
+
   font-size: 20px;
   font-family: "Chivo Black", sans-serif;
   font-weight: bold;
@@ -107,7 +107,7 @@ input{
   color: #f8f8f8;
 }
 /* Code realtif au Lobby */
-.Lobby{
+.Lobby {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -115,7 +115,7 @@ input{
   margin-top: 32px;
 }
 /* Blue card classes */
-.Blue_card{
+.Blue_card {
   display: flex;
   flex-direction: column;
   background-color: #2a4fd3;
@@ -127,7 +127,7 @@ input{
   padding: 8px;
 }
 
-.Blue_card_title{
+.Blue_card_title {
   font-size: 32px;
   font-weight: 900;
   font-family: "Chivo Black", sans-serif;
@@ -135,24 +135,23 @@ input{
   margin: 0px 0px 8px 0px;
 }
 
-
-.Blue_card_content h5  {
+.Blue_card_content h5 {
   font-size: 24px;
   font-weight: bold;
   font-family: "Chivo Black", sans-serif;
   padding-left: 15px;
   margin: 8px 0px 16px 0px;
 }
-.bc_section{
+.bc_section {
   margin-bottom: 16px;
 }
-.bc_grid{
+.bc_grid {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 32px;
 }
-.bc_item{
+.bc_item {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -169,7 +168,7 @@ input{
   color: black;
 }
 /* User_lists */
-.User_lists{
+.User_lists {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -178,9 +177,9 @@ input{
   font-weight: 900;
   border-radius: 10px;
   padding: 4px;
-  gap : 8px;
+  gap: 8px;
 }
-.User_Card{
+.User_Card {
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -190,32 +189,31 @@ input{
   padding: 8px;
 }
 /* game-view */
-.game-view{
+.game-view {
   margin-top: 32px;
   display: flex;
   flex-direction: row;
-  justify-content: center ;
-  align-items:flex-start;
-  padding:  0px 64px;
-
-} 
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0px 64px;
+}
 /* game-board */
-.game-board{
+.game-board {
   display: flex;
   width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 4px;
-  gap : 32px;
+  gap: 32px;
 }
-.game-board__head{
+.game-board__head {
   display: flex;
   flex-direction: row;
-  justify-content:flex-end;
+  justify-content: flex-end;
   align-items: center;
 }
-.game-board__body{
+.game-board__body {
   width: 500px;
   display: flex;
   flex-direction: column;
@@ -225,10 +223,10 @@ input{
 }
 
 /*Turnn*/
-.turn--enabled{
+.turn--enabled {
   display: block;
 }
-.turn--disabled{
+.turn--disabled {
   display: none;
 }
 
@@ -262,14 +260,33 @@ input{
   animation: loading 3s linear 2s infinite;
 }
 @keyframes loading {
-    from {left: 50%; width: 0;z-index:100;}
-    33.3333% {left: 0; width: 100%;z-index: 10;}
-    to {left: 0; width: 100%;}
+  from {
+    left: 50%;
+    width: 0;
+    z-index: 100;
+  }
+  33.3333% {
+    left: 0;
+    width: 100%;
+    z-index: 10;
+  }
+  to {
+    left: 0;
+    width: 100%;
+  }
 }
-.loadertxt{
+.loadertxt {
   margin-top: 10px;
-    font-family: "Chivo Black", sans-serif;
-    font-size: 25px;
-    text-align: center;
+  font-family: "Chivo Black", sans-serif;
+  font-size: 25px;
+  text-align: center;
+}
+.partycode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Chivo Black", sans-serif;
+  font-size: 20px;
+  padding-left: 12px;
 
 }

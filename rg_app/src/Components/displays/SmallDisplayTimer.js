@@ -4,7 +4,7 @@ import './SmallDisplay.css';
 export default function SmallDisplayTimer(props) {
     // Get the current time
     // const [currentime, setCurrentTime] = useState(props.time);
-    const [counter, setCounter] = React.useState(30);
+    const [counter, setCounter] = React.useState(props.time);
 
     // const startTimer = () => {
     //     setCurrentTime(props.time);

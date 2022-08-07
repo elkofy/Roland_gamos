@@ -15,7 +15,7 @@ export default function Lobby() {
         socket.on('room', (data) => {
             setUsers(data);
         });
-        socket.on('startGame', (room) => {
+        socket.on('startGame', () => {
             if (window.location.href !== `http://localhost:3000/Game`) {
                 navigate('/Game');
             }

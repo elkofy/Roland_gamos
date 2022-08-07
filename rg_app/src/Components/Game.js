@@ -33,7 +33,6 @@ export default function Game() {
         });
 
         socket.on('currentplayer', (data) => {
-            console.log('currentplayer', data);
             setCurrentPlayer(data)
         });
 
@@ -42,7 +41,7 @@ export default function Game() {
             setAnswer(data)
         })
         socket.on('updateGS', (data) => {
-            console.log('socket listen gameState', data);
+            console.log('updateGS', data);
             if (data.ended === true) {
                 setIsEnded(true)
                 alert(`${data.winner} won the game`)
@@ -51,11 +50,8 @@ export default function Game() {
             setCurrentArtist(data.currentArtist)
             setArtists(data.artists)
             setCurrentPlayer(data.currentPlayer)
-
-            console.log(data.artists);
         });
         socket.on('end', (data) => {
-            console.log('end', data);
             setIsEnded(data);
         });
 
@@ -73,10 +69,8 @@ export default function Game() {
 
 
         socket.on('getRandArtist', (data) => {
-            console.log('getRandArtist', data);
             setCurrentArtist(data)
             setArtists([data])
-            console.log(data);
 
         });
 
@@ -111,7 +105,6 @@ export default function Game() {
 
     return (
         <div className="game-view" >
-            {console.log(gameState)}
             <Bluecard selected={currentPlayer === players[0]} text={players[0]} />
             <div className="game-board" id="Wrapper">
                 <div className="game-board__head">

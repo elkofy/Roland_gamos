@@ -11,6 +11,7 @@ import Create from "./Components/Create";
 import Join from "./Components/Join";
 import Lobby from "./Components/Lobby";
 import Game from "./Components/Game";
+import WinnerCard from './Components/WinnerCard';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route  path='/Join' exact element={<Join />} />
             <Route  path='/Lobby' exact element={<Lobby />} />
             <Route  path='/Game' exact element={<Game />} />
+            <Route path='/Winner' exact element={<WinnerCard />} />
 
           </Routes>
         </SocketContext.Provider>

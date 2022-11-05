@@ -290,3 +290,20 @@ input {
   padding-left: 12px;
 
 }
+/*Winnercard*/
+.WinnerCard{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.WinnerCard__img{
+  width: 100px;
+  height: 100px;
+  padding-bottom: 4px;
+}
+.WinnerCard__title{
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: -4px;
+}

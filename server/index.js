@@ -238,11 +238,11 @@ io.on("connection", socket => {
     console.log("user disconnected");
     let roomdel = storage.getRoombyPlayerid(socket.id);
     if (roomdel) {
-    console.log(storage.getRooms());
+      console.log(storage.getRooms());
 
-    console.log(roomdel.name);
-    storage.removeRoombyname(roomdel.name); //remove room
-    console.log(storage.getRooms());
+      console.log(roomdel.name);
+      storage.removeRoombyname(roomdel.name); //remove room
+      console.log(storage.getRooms());
     }
   }
   );
@@ -298,7 +298,8 @@ io.on("connection", socket => {
         idxplayer == storage.getPlayersNames(room).length - 1 ? idxplayer = 0 : idxplayer += 1;
         storage.setGSWinner(room, storage.getPlayersNames(room)[idxplayer]);
         socket.emit("end", storage.getGameState(room).ended);
-        
+        socket.emit("winner", storage.getGameState(room).winner);
+
       }
       storage.setGSArtists(room, [storage.getGSArtists(room), data[0]]);
       idxplayer == storage.getPlayersNames(room).length - 1 ? idxplayer = 0 : idxplayer += 1;
@@ -313,7 +314,7 @@ io.on("connection", socket => {
     let artists = ['dinos', 'orelsan', 'alpha wann', 'kaaris', 'freeze corleone', 'laylow', 'damso', 'nekfeu', 'disiz', 'hamza', 'sch', 'la feve', 'zamdane', 'jul', 'alonzo'];
     const randomIndex = Math.floor(Math.random() * artists.length);
     storage.setGSArtist(room, artists[randomIndex]);
-    storage.setGSArtists(room,  artists[randomIndex]);
+    storage.setGSArtists(room, artists[randomIndex]);
     storage.setGSTurn(room, storage.getGameState(room).turn + 1);
     storage.setGSCurrentPlayer(room, storage.getPlayersNames(room)[0]);
     io.to(room).emit("getRandArtist", artists[randomIndex]);
@@ -328,13 +329,10 @@ io.on("connection", socket => {
     io.to(data[1]).emit("gameParams", data);
 
   })
-
-  socket.on("updateGS", (data) => {
-    console.log("updateGS", data[0]);
-    game.gameState = data[0];
-    io.to(data[1]).emit("updateGS", data[0]);
-  }
-  );
+  socket.on("endGame", (room) => {
+    console.log("getGameState", room);
+    io.to(room).emit("winner", storage.getGameState(room).winner);
+  });
 
 });
 

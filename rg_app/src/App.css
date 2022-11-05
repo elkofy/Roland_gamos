@@ -1,3 +1,14 @@
+a,
+a:link,
+a:visited,
+a:focus,
+a:hover,
+a:active {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .headerClass {
   background-color: #f9d64b;
   text-align: center;
@@ -37,12 +48,20 @@
   color: #e74045;
   font-size: 48px;
   font-weight: bold;
-  font-family: "Chivo Black", sans-serif;
+  font-family: "Chivo", sans-serif;
+}
+.outerCardclass {
+  background-color: #2a4fd3;
+  border-radius: 32px;
+  padding: 16px;
+}
+.outerCardclass:hover {
+  box-shadow: 4px 8px 4px rgba(0, 0, 0, 0.25);
+  transition: 0.1s ease;
 }
 .innerCardclass {
-  padding: 20px;
-  margin: 20px;
-  border-radius: 5px;
+  padding: 8px;
+  border-radius: 16px;
   background-color: #f8f8f8;
   width: 300px;
   height: 420px;
@@ -52,17 +71,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 300px;
-  height: 300px;
-  border-radius: 5px;
+  width: 150px;
+  height: 150px;
+  margin: 16px auto;
+  padding: 32px;
 }
 .cardplaceholderclass {
   margin-top: 100px;
   display: flex;
   justify-content: center;
-  font-weight: bold;
-  font-family: "Chivo Black", sans-serif;
-  font-size: 20px;
+  font-family: "Chivo", sans-serif;
+  font-weight: 900;
+  font-size: 24px;
 }
 .bc_item_selected {
   outline: solid 5px red;
@@ -88,7 +108,7 @@ input {
   height: 30px;
 
   font-size: 20px;
-  font-family: "Chivo Black", sans-serif;
+  font-family: "Chivo", sans-serif;
   font-weight: bold;
   margin: 10px;
 }
@@ -100,7 +120,7 @@ input {
   padding: 4px;
   border: 1px solid #e74045;
   font-size: 20px;
-  font-family: "Chivo Black", sans-serif;
+  font-family: "Chivo", sans-serif;
   font-weight: bold;
   margin: 10px;
   background-color: #e74045;
@@ -130,7 +150,7 @@ input {
 .Blue_card_title {
   font-size: 32px;
   font-weight: 900;
-  font-family: "Chivo Black", sans-serif;
+  font-family: "Chivo", sans-serif;
   padding-left: 15px;
   margin: 0px 0px 8px 0px;
 }
@@ -138,7 +158,7 @@ input {
 .Blue_card_content h5 {
   font-size: 24px;
   font-weight: bold;
-  font-family: "Chivo Black", sans-serif;
+  font-family: "Chivo", sans-serif;
   padding-left: 15px;
   margin: 8px 0px 16px 0px;
 }
@@ -157,7 +177,7 @@ input {
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  font-family: "Chivo Black", sans-serif;
+  font-family: "Chivo", sans-serif;
   font-weight: 900;
   background-color: #fff;
   box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.25);
@@ -173,7 +193,7 @@ input {
   flex-direction: column;
   justify-content: center;
   font-size: 24px;
-  font-family: "Chivo Black", sans-serif;
+  font-family: "Chivo", sans-serif;
   font-weight: 900;
   border-radius: 10px;
   padding: 4px;
@@ -277,7 +297,7 @@ input {
 }
 .loadertxt {
   margin-top: 10px;
-  font-family: "Chivo Black", sans-serif;
+  font-family: "Chivo", sans-serif;
   font-size: 25px;
   text-align: center;
 }
@@ -285,24 +305,23 @@ input {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: "Chivo Black", sans-serif;
+  font-family: "Chivo", sans-serif;
   font-size: 20px;
   padding-left: 12px;
-
 }
 /*Winnercard*/
-.WinnerCard{
+.WinnerCard {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.WinnerCard__img{
+.WinnerCard__img {
   width: 100px;
   height: 100px;
   padding-bottom: 4px;
 }
-.WinnerCard__title{
+.WinnerCard__title {
   font-size: 32px;
   font-weight: 900;
   margin-bottom: -4px;

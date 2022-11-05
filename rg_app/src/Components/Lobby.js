@@ -25,7 +25,7 @@ export default function Lobby() {
     }
 
     const StartGame = () => {
-        socket.emit('startGame', localStorage.getItem("Room"));
+        socket.emit('startGame', { parameters: [localStorage.getItem('manche'),localStorage.getItem('vie'),localStorage.getItem('duree')], room: localStorage.getItem("Room") });
     }
 
     useEffect(() => {
@@ -46,28 +46,12 @@ export default function Lobby() {
                 </div>
             </div>
 
-            {isLeader ? <div className="Blue_card">
-                <h3 className="Blue_card_title">Paramètres :</h3>
-                <div className="Blue_card_content">
-                    <div className="bc_section">
-                        <h5>Manche :</h5>
-                        <Selector className='manche_item' />
-                    </div>
-                    <div className="bc_section">
-                        <h5>Durée :</h5>
-                        <Selector className='duree_item' />
-                    </div>
-                    <div className="bc_section">
-                        <h5>Vie :</h5>
-                        <Selector className='vie_item' />
-                    </div>
-                </div>
-            </div> : <div className="load-bar">
+            {isLeader ? undefined: <div className="load-bar">
                 <div className="bar"></div>
                 <div className="bar"></div>
                 <div className="bar"></div>
                 <div className='loadertxt'> En attente de l'hote</div>
-            </div> }
+            </div>}
 
             <div>
                 {isLeader ? <button className="form_Btn" onClick={StartGame} ><span role='img' aria-label="rocket">🚀</span>  GO ! <span role='img' aria-label="rocket">🚀</span> </button> : ""}

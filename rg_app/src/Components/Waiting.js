@@ -10,23 +10,27 @@ export default function Waiting() {
             <div>
             </div>
             <div className="CardChoice-wrapper">
-                <div className="innerCardclass">
-                    <Link to="/Create">
-                        <img alt="logo" src={create} className="cardlogoclass" />
-                        <div className="cardplaceholderclass">
-                            Créer un serveur
-                        </div>
-                    </Link>
+                <div className="outerCardclass">
+                    <div className="innerCardclass">
+                        <Link to="/Create">
+                            <img alt="logo" src={create} className="cardlogoclass" />
+                            <div className="cardplaceholderclass">
+                                Créer une partie 
+                            </div>
+                        </Link>
+                    </div>
                 </div>
-                <div className="innerCardclass">
-                    <Link to="/Join">
-                        <img alt="logo" src={join} className="cardlogoclass" />
-                        <div className="cardplaceholderclass">
-                            Rejoindre un serveur
-                        </div>
-                    </Link>
-                </div>
+                <div className="outerCardclass">
 
+                    <div className="innerCardclass">
+                        <Link to="/Join">
+                            <img alt="logo" src={join} className="cardlogoclass" />
+                            <div className="cardplaceholderclass">
+                                Rejoindre une partie
+                            </div>
+                        </Link>
+                    </div>
+                </div>
 
             </div>
         </div>

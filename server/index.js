@@ -156,6 +156,8 @@ class Player {
 
 }
 
+
+
 var storage = {
   rooms: [],
   addRoom: function (room) {
@@ -262,10 +264,11 @@ io.on("connection", socket => {
     io.to(data[0]).emit("room", storage.getPlayersNames(data[0]));
     // console.log(storage.rooms);
   }
+
   );
-  socket.on("startGame", (room) => {
-    // console.log("startGame", room);
-    io.to(room).emit("startGame", room);
+  socket.on("startGame", (data) => {
+    console.log("startGame", data);
+    io.to(data.room).emit("startGame", data.room);
   }
   );
   socket.on("players", (room) => {

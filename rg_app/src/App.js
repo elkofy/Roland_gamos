@@ -21,8 +21,7 @@ function App() {
         <Header className="headerClass" />
         <SocketContext.Provider value={socket}>
           <Routes>
-          <Route  path='/'  exact element={<CardChoiceWrapper />} />
-            <Route  path="/loginguest"  exact element={<LoginGuest />} />
+          <Route  path='/'  exact element={<LoginGuest />} />
             <Route  path="/Waiting" exact element={<Waiting />} />
             <Route  path='/Create' exact element={<Create />} />
             <Route  path='/Join' exact element={<Join />} />

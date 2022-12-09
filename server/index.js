@@ -3,17 +3,17 @@ const httpServer = require("http").createServer(app);
 
 const options = {
   cors: {
-    origin: "*",
+    origin: "https://roland-gamos-tau.vercel.app/",
   }
 };
 
 const io = require("socket.io")(httpServer, options);
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.send("<h1>Rolland Gamos API</h1>");
 }
 );
-var game = {
+let game = {
   players: [],
   gameState: {
     parameters: {

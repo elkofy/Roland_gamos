@@ -10,7 +10,8 @@ const options = {
 const io = require("socket.io")(httpServer, options);
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+
+  res.send("<h1>Rollad Gamos Api</h1>");
 }
 );
 var game = {

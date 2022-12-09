@@ -5,10 +5,8 @@ import { Link } from "react-router-dom";
 export default function Waiting() {
 
     return (
-        <div>
+        <div className="MainComponent">
             <h1>Bienvenue {localStorage.User}</h1>
-            <div>
-            </div>
             <div className="CardChoice-wrapper">
                 <div className="outerCardclass">
                     <div className="innerCardclass">

@@ -16,9 +16,8 @@ import WinnerCard from './Components/WinnerCard';
 function App() {
 
   return (
-    <div className="App">
       <BrowserRouter>
-        <Header className="headerClass" />
+        <Header />
         <SocketContext.Provider value={socket}>
           <Routes>
           <Route  path='/'  exact element={<LoginGuest />} />
@@ -32,7 +31,6 @@ function App() {
           </Routes>
         </SocketContext.Provider>
       </BrowserRouter>
-    </div>
   );
 }
 

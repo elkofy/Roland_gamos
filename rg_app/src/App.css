@@ -8,21 +8,33 @@ a:active {
   text-decoration: none;
   cursor: pointer;
 }
+body {
+  margin: 0;
+  padding: 0;
+}
 
 .headerClass {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #f9d64b;
-  text-align: center;
-  height: 230px;
-  border-bottom: 21px solid #f3db7a;
+  border-bottom: 1rem solid #f3db7a;
   font-family: "Montserrat", sans-serif;
   font-size: 15px;
+  padding: 0 4px;
+  text-align: center;
+}
+.MainComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .logo {
-  transform: scale(0.7);
-  margin-top: -10px;
-  margin-left: -10px;
-  margin-right: -10px;
-  margin-bottom: -10px;
+  width: 30%;
+  max-width: 450px;
+  min-width: 230px;
+  object-fit: cover;
 }
 .CardChoice-wrapper {
   display: flex;
@@ -94,14 +106,30 @@ a:active {
   align-items: center;
   margin-top: 50px;
 }
-.formulaire {
+.form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 25px;
   border-radius: 5px;
-  border: 1px solid #e74045;
+  border: 3px solid black;
+  padding: 0px 16px;
+  animation: borderSpin 10s linear infinite;
+}
+@keyframes borderSpin {
+  0% {
+    border-color: #f9d64b;
+  }
+  25% {
+    border-color: #e74045;
+  }
+  50% {
+    border-color: #2a4fd3;
+  }
+  100% {
+    border-color: #f9d64b;
+  }
 }
 input {
   width: 180px;
@@ -113,7 +141,7 @@ input {
   margin: 10px;
 }
 
-.form_Btn {
+.form-btn {
   width: 180px;
   height: 40px;
   border-radius: 5px;
@@ -125,6 +153,21 @@ input {
   margin: 10px;
   background-color: #e74045;
   color: #f8f8f8;
+  transition: all 0.3s ease;
+}
+.form-btn:disabled {
+  width: 180px;
+  height: 40px;
+  border-radius: 5px;
+  padding: 4px;
+  border: 1px solid #d3d3d3;
+  font-size: 20px;
+  font-family: "Chivo", sans-serif;
+  font-weight: bold;
+  margin: 10px;
+  background-color: #d3d3d3;
+  color: #f8f8f8;
+  transition: all 0.3s ease;
 }
 /* Code realtif au Lobby */
 .Lobby {
@@ -307,7 +350,9 @@ input {
   gap: 8px;
   font-family: "Chivo", sans-serif;
   font-size: 20px;
-  padding-left: 12px;
+}
+.partycode p {
+  margin: 0;
 }
 /*Winnercard*/
 .WinnerCard {
@@ -325,4 +370,45 @@ input {
   font-size: 32px;
   font-weight: 900;
   margin-bottom: -4px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .CardChoice-wrapper {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+}
+.PartyForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  margin-top: 32px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+.PartyForm input {
+  margin: 0;
+}
+button {
+  background-color: #2a4fd3;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 16px;
+  font-family: "Chivo", sans-serif;
+  font-weight: 900;
+  cursor: pointer;
+}
+.react-code-input input {
+  margin: 0;
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { SocketContext } from '../context/socket';
 import { useNavigate } from "react-router-dom";
 
-import Selector from "./Selector";
 export default function Lobby() {
     const socket = useContext(SocketContext);
     let navigate = useNavigate();

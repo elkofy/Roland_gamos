@@ -3,7 +3,7 @@ const httpServer = require("http").createServer(app);
 
 const options = {
   cors: {
-    origin: "*",
+    origin: "https://roland-gamos-git-master-elkofy.vercel.app/",
   }
 };
 

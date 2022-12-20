@@ -26,6 +26,8 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
+
+console.log("Server is running on port 3000");
 app.get("/", (req, res) => {
 
   res.send("<h1>Rollad Gamos Api</h1>");

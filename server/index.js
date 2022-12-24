@@ -3,6 +3,10 @@ const httpServer = require("http").createServer(app);
 
 const options = {
 
+  cors: {
+    origin: "*",
+  }
+
 };
 
 const io = require("socket.io")(httpServer, options);
